@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Approval Dashboard | Mobi EA Expert</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap">
+    <style>
+        body {
+            background-color: #000000;
+            color: #00FFFF;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background-color: #000000;
+            border: 1px solid #00FFFF;
+            box-shadow: 0 0 15px #00FFFF;
+            padding: 20px;
+        }
+        .btn-approve {
+            background-color: #00FF00;
+            color: #000;
+            border: none;
+        }
+        .btn-reject {
+            background-color: #FF0000;
+            color: #FFF;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Mentor Approval Dashboard</h1>
+        <div class="card">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="mentor-list">
+                    <!-- Mentor data will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Dummy data for mentors (replace with database integration)
+        const mentors = [
+            { id: 1, name: "John Doe", email: "john@example.com", status: "Pending" },
+            { id: 2, name: "Jane Smith", email: "jane@example.com", status: "Pending" },
+        ];
+
+        const mentorList = document.getElementById("mentor-list");
+
+        function loadMentors() {
+            mentorList.innerHTML = "";
+            mentors.forEach(mentor => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${mentor.name}</td>
+                    <td>${mentor.email}</td>
+                    <td>${mentor.status}</td>
+                    <td>
+                        <button class="btn btn-approve" onclick="approveMentor(${mentor.id})">Approve</button>
+                        <button class="btn btn-reject" onclick="rejectMentor(${mentor.id})">Reject</button>
+                    </td>
+                `;
+                mentorList.appendChild(row);
+            });
+        }
+
+        function approveMentor(id) {
+            const mentor = mentors.find(m => m.id === id);
+            if (mentor) {
+                mentor.status = "Approved";
+                loadMentors();
+            }
+        }
+
+        function rejectMentor(id) {
+            const mentor = mentors.find(m => m.id === id);
+            if (mentor) {
+                mentor.status = "Rejected";
+                loadMentors();
+            }
+        }
+
+        loadMentors();
+    </script>
+</body>
+</html>
